@@ -1,0 +1,120 @@
+#include<stdio.h>
+#define MAX 5
+struct stack
+{
+int stk[MAX];
+int top;
+}st;
+void init();
+void push(int);
+int full();
+int pop();
+int empty();
+void display();
+int peek();
+int main()
+{
+int ch,num;
+init();
+do{
+printf("\n Menu= 1.Push 2. Pop 3. Peek = ");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:
+printf("\n Enter the data=");
+scanf("%d",&num);
+push(num);
+display();
+break;
+case 2:
+num=pop();
+if(num!=-9999)
+printf("Element popped=%d",num);
+display();
+break;
+case 3:
+
+num=peek();
+if(num!=-9999)
+printf("\nTop element=%d",num);
+break;
+}
+}while(ch<4);
+}
+void init()
+{
+st.top=-1;
+}
+void push(int num)
+{
+if(full()==1)
+{
+printf("\n Stack is full");
+}
+else
+{
+st.top++;
+st.stk[st.top]=num;
+}
+}
+int full()
+{
+if(st.top==MAX-1)
+return 1;
+else
+return 0;
+
+}
+int empty()
+{
+if(st.top==-1)
+return 1;
+else
+return 0;
+
+}
+
+void display()
+
+{
+int i;
+if(empty()==1)
+{
+printf("\n Stack is empty");
+}
+else
+{
+printf("\n Content of the stack is=\n");
+for(i=st.top;i>=0;i--)
+{
+printf("%d\n",st.stk[i]);
+}
+}
+}
+int pop()
+{
+int num;
+if(empty()==1)
+{
+printf("\n stack is empty");
+return -9999;
+} else
+{
+num=st.stk[st.top];
+st.top--;
+return num;
+}
+}
+int peek()
+{
+if(empty()==1)
+{
+printf("\n Stack is empty");
+return -9999;
+}
+else
+{
+return st.stk[st.top];
+}
+}
