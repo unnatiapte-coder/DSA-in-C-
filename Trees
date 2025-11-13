@@ -1,0 +1,228 @@
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+typedef struct bstree {
+int data;
+struct bstree *lchild, *rchild;
+} node;
+node *createbstree(node *);
+node *getnode();
+node *search(node *, int);
+void inorder_rec(node *);
+void preorder_rec(node *);
+void postorder_rec(node *);
+node *del(node *);
+int main() {
+node *root = NULL, *temp;
+int ch = 0, srno = 0;
+printf(&quot;\nCreate the BST\n&quot;);
+root = createbstree(root);
+do {
+printf(&quot;\n--- MENU ---&quot;);
+printf(&quot;\n1. Inorder Traversal (Recursive)&quot;);
+printf(&quot;\n2. Preorder Traversal (Recursive)&quot;);
+printf(&quot;\n3. Postorder Traversal (Recursive)&quot;);
+
+printf(&quot;\n4. Search a Node&quot;);
+printf(&quot;\n5. Delete a Node&quot;);
+printf(&quot;\n6. Exit&quot;);
+printf(&quot;\nEnter your choice: &quot;);
+scanf(&quot;%d&quot;, &amp;ch);
+switch (ch) {
+case 1:
+printf(&quot;\nInorder Traversal:\n&quot;);
+inorder_rec(root);
+break;
+case 2:
+printf(&quot;\nPreorder Traversal:\n&quot;);
+preorder_rec(root);
+break;
+case 3:
+printf(&quot;\nPostorder Traversal:\n&quot;);
+postorder_rec(root);
+break;
+case 4:
+printf(&quot;\nEnter data to search: &quot;);
+scanf(&quot;%d&quot;, &amp;srno);
+temp = search(root, srno);
+if (temp == NULL)
+printf(&quot;\nNode not found in the tree.\n&quot;);
+else
+printf(&quot;\nNode with data %d found.\n&quot;, temp-&gt;data);
+break;
+case 5:
+root = del(root);
+
+printf(&quot;\nInorder traversal after deletion:\n&quot;);
+inorder_rec(root);
+break;
+case 6:
+exit(0);
+default:
+printf(&quot;\nInvalid choice! Try again.\n&quot;);
+}
+} while (ch != 6);
+return 0;
+}
+/* CREATE THE BST */
+node *createbstree(node *root) {
+node *newnode = NULL, *oldnode = NULL;
+char ch;
+do {
+newnode = getnode();
+if (root == NULL) {
+root = newnode;
+} else {
+oldnode = root;
+while (1) {
+if (newnode-&gt;data &lt; oldnode-&gt;data) {
+if (oldnode-&gt;lchild == NULL) {
+oldnode-&gt;lchild = newnode;
+break;
+} else {
+oldnode = oldnode-&gt;lchild;
+}
+
+} else if (newnode-&gt;data &gt; oldnode-&gt;data) {
+if (oldnode-&gt;rchild == NULL) {
+oldnode-&gt;rchild = newnode;
+break;
+} else {
+oldnode = oldnode-&gt;rchild;
+}
+} else {
+printf(&quot;\nDuplicate node can&#39;t be created!\n&quot;);
+break;
+}
+}
+}
+printf(&quot;\nDo you want to add more nodes? (y/n): &quot;);
+scanf(&quot; %c&quot;, &amp;ch);
+} while (ch != &#39;n&#39; &amp;&amp; ch != &#39;N&#39;);
+return root;
+}
+/* GET A NEW NODE */
+node *getnode() {
+node *temp = (node *)malloc(sizeof(node));
+if (temp == NULL) {
+printf(&quot;\nMemory allocation error!&quot;);
+exit(0);
+}
+printf(&quot;\nEnter the data: &quot;);
+scanf(&quot;%d&quot;, &amp;temp-&gt;data);
+temp-&gt;lchild = NULL;
+temp-&gt;rchild = NULL;
+return temp;
+
+}
+/* SEARCH NODE */
+node *search(node *pt, int srno) {
+while (pt != NULL) {
+if (srno == pt-&gt;data)
+return pt;
+else if (srno &lt; pt-&gt;data)
+pt = pt-&gt;lchild;
+else
+pt = pt-&gt;rchild;
+}
+return NULL;
+}
+/* INORDER TRAVERSAL */
+void inorder_rec(node *pt) {
+if (pt != NULL) {
+inorder_rec(pt-&gt;lchild);
+printf(&quot;\t%d&quot;, pt-&gt;data);
+inorder_rec(pt-&gt;rchild);
+}
+}
+/* PREORDER TRAVERSAL */
+void preorder_rec(node *pt) {
+if (pt != NULL) {
+printf(&quot;\t%d&quot;, pt-&gt;data);
+preorder_rec(pt-&gt;lchild);
+preorder_rec(pt-&gt;rchild);
+}
+}
+/* POSTORDER TRAVERSAL */
+void postorder_rec(node *pt) {
+
+if (pt != NULL) {
+postorder_rec(pt-&gt;lchild);
+postorder_rec(pt-&gt;rchild);
+printf(&quot;\t%d&quot;, pt-&gt;data);
+}
+}
+/* DELETE NODE */
+node *del(node *root) {
+int no;
+node *temp, *prev, *x, *succ;
+if (root == NULL) {
+printf(&quot;\nTree is empty.\n&quot;);
+return root;
+}
+printf(&quot;\nEnter data to delete: &quot;);
+scanf(&quot;%d&quot;, &amp;no);
+temp = root;
+prev = NULL;
+// Search for the node to delete
+while (temp != NULL &amp;&amp; temp-&gt;data != no) {
+prev = temp;
+if (no &lt; temp-&gt;data)
+temp = temp-&gt;lchild;
+else
+temp = temp-&gt;rchild;
+}
+if (temp == NULL) {
+printf(&quot;\nNode not found.\n&quot;);
+return root;
+
+}
+// Case 1: Leaf node
+if (temp-&gt;lchild == NULL &amp;&amp; temp-&gt;rchild == NULL) {
+if (prev == NULL)
+root = NULL;
+else if (prev-&gt;lchild == temp)
+prev-&gt;lchild = NULL;
+else
+prev-&gt;rchild = NULL;
+printf(&quot;\nLeaf node deleted.\n&quot;);
+}
+// Case 2: Only right child
+else if (temp-&gt;lchild == NULL) {
+if (prev == NULL)
+root = temp-&gt;rchild;
+else if (prev-&gt;lchild == temp)
+prev-&gt;lchild = temp-&gt;rchild;
+else
+prev-&gt;rchild = temp-&gt;rchild;
+printf(&quot;\nNode with right subtree deleted.\n&quot;);
+}
+// Case 3: Only left child
+else if (temp-&gt;rchild == NULL) {
+if (prev == NULL)
+root = temp-&gt;lchild;
+else if (prev-&gt;lchild == temp)
+prev-&gt;lchild = temp-&gt;lchild;
+else
+prev-&gt;rchild = temp-&gt;lchild;
+printf(&quot;\nNode with left subtree deleted.\n&quot;);
+}
+
+// Case 4: Two children
+else {
+succ = temp-&gt;rchild;
+prev = temp;
+while (succ-&gt;lchild != NULL) {
+prev = succ;
+succ = succ-&gt;lchild;
+}
+temp-&gt;data = succ-&gt;data;
+if (prev-&gt;lchild == succ)
+prev-&gt;lchild = succ-&gt;rchild;
+else
+prev-&gt;rchild = succ-&gt;rchild;
+temp = succ;
+printf(&quot;\nNode with two subtrees deleted using inorder successor.\n&quot;);
+}
+free(temp);
+return root;
+}
