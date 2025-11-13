@@ -1,0 +1,122 @@
+#include &lt;stdlib.h&gt;
+#define MAX 5
+struct queue
+{
+int number;
+struct queue *next;
+}*front,*rear,*p;
+void init();
+void add (int);
+int delete();
+int empty();
+void display();
+int peak();
+int main()
+{
+int ch,num;
+init();
+do
+{
+printf(&quot;\n Menu:\n 1.Add \n 2.Delete &quot;);
+scanf(&quot;%d&quot;,&amp;ch);
+switch(ch)
+{
+case 1:
+
+printf(&quot;Enter data=&quot;);
+scanf(&quot;%d&quot;,&amp;num);
+add(num);
+display();
+break;
+case 2:
+num=delete();
+if(num!=-9999)
+{
+printf(&quot;Element popped=%d&quot;,num);
+display();
+}
+break;
+}
+}while(ch&lt;3);
+}
+void init()
+{
+front=NULL;
+rear=NULL;
+}
+void add(int num)
+{
+p=(struct queue*)malloc(sizeof(struct queue));
+p-&gt;number=num;
+p-&gt;next=NULL;
+if (rear==NULL)
+{
+
+front=p;
+rear=p;
+
+}
+else
+{
+
+rear-&gt;next=p;
+rear=p;
+}
+}
+
+int empty()
+{
+if(front==NULL)
+{
+}
+else
+{
+}
+}
+
+return 1;
+
+return 0;
+
+void display()
+{
+int i;
+if(front==NULL)
+{
+
+}
+else
+{
+printf(&quot;queue is empty&quot;);
+
+p=front;
+while(p!=NULL)
+{
+printf(&quot;\n\t%d&quot;,p-&gt;number);
+p=p-&gt;next;
+}
+}
+}
+
+int delete()
+{
+int num;
+if(empty()==1)
+{
+
+}
+else
+{
+
+}
+}
+
+printf(&quot;\n queue Empty&quot;);
+return -9999;
+
+num=front-&gt;number;
+p=front;
+front=front-&gt;next;
+p-&gt;next=NULL;
+free(p);
+return num;
