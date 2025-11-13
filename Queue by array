@@ -1,0 +1,127 @@
+#include&lt;stdio.h&gt;
+#define MAX 5
+struct queue
+{
+int a[MAX];
+int front,rear;
+}q1;
+void init();
+void add (int);
+int qfull();
+int delete();
+int empty();
+void display();
+int main()
+{
+int ch,num;
+init();
+do
+{
+printf(&quot;\n Menu:\n 1.add \n 2.delete&quot;);
+scanf(&quot;%d&quot;,&amp;ch);
+switch(ch)
+{
+case 1:
+printf(&quot;Enter data=&quot;);
+scanf(&quot;%d&quot;,&amp;num);
+add(num);
+display();
+break;
+case 2:
+num=delete();
+if(num!=-9999)
+
+{
+printf(&quot;Element deleted=%d&quot;,num);
+display();
+}
+break;
+}
+}while(ch&lt;3);
+}
+void init()
+{
+q1.front=0;
+q1.rear=-1;
+}
+void add(int num)
+{
+if (qfull()==1)
+{
+}
+else
+{
+
+}
+}
+
+printf(&quot;Queue is full&quot;);
+
+q1.rear++;
+q1.a[q1.rear]=num;
+
+int qfull()
+{
+if(q1.rear==MAX-1)
+{
+return 1;
+
+}
+else
+{
+}
+}
+
+return 0;
+
+int empty()
+{
+if(q1.front==q1.rear+1)
+{
+}
+else
+{
+}
+}
+
+return 1;
+
+return 0;
+
+void display()
+{
+int i;
+if(empty()==1)
+{
+}
+else
+{
+printf(&quot;Queue is empty&quot;);
+
+printf(&quot;The content is:\n&quot;);
+for(i=q1.front;i&lt;=q1.rear;i++)
+{
+printf(&quot;%d\n&quot;,q1.a[i]);
+}
+}
+}
+
+int delete()
+{
+int num;
+if(empty()==1)
+{
+
+}
+else
+{
+
+}
+}
+
+printf(&quot;\n Queue Empty&quot;);
+return -9999;
+
+num=q1.a[q1.front];
+q1.front++;
+return num;
