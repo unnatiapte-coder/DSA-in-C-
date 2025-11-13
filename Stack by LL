@@ -1,0 +1,117 @@
+#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#define MAX 5
+struct stack
+{
+int number;
+struct stack *next;
+}*top,*p;
+void init();
+void push (int);
+int full();
+int pop();
+int empty();
+void display();
+int peak();
+int main()
+{
+int ch,num;
+init();
+do
+{
+printf(&quot;\n Menu:\n 1.Push \n 2.Pop&quot;);
+scanf(&quot;%d&quot;,&amp;ch);
+switch(ch)
+{
+case 1:
+printf(&quot;Enter data=&quot;);
+scanf(&quot;%d&quot;,&amp;num);
+push(num);
+display();
+break;
+case 2:
+num=pop();
+
+if(num!=-9999)
+{
+printf(&quot;Element popped=%d&quot;,num);
+display();
+}
+break;
+}
+}while(ch&lt;3);
+}
+void init()
+{
+top=NULL;
+}
+void push(int num)
+{
+p=(struct stack*)malloc(sizeof(struct stack));
+p-&gt;number=num;
+p-&gt;next=NULL;
+if (top==NULL)
+{
+}
+else
+{
+
+}
+}
+
+top=p;
+
+p-&gt;next=top;
+top=p;
+
+int empty()
+{
+if(top==NULL)
+{
+}
+else
+{
+}
+}
+
+return 1;
+
+return 0;
+
+void display()
+{
+int i;
+if(top==NULL)
+{
+}
+else
+{
+printf(&quot;Stack is empty&quot;);
+
+p=top;
+while(p!=NULL)
+{
+printf(&quot;\n\t%d&quot;,p-&gt;number);
+p=p-&gt;next;
+}
+}
+}
+int pop()
+{
+int num;
+if(empty()==1)
+{
+
+}
+else
+{
+printf(&quot;\n Stack Empty&quot;);
+return -9999;
+
+p=top;
+num=top-&gt;number;
+top=top-&gt;next;
+free(p);
+return num;
+}
+}
