@@ -1,0 +1,80 @@
+#include<stdio.h>
+struct poly
+{
+int expo,coeff;
+}p1[10],p2[10],p3[10];
+int main()
+{
+int n,m,i,j,k;
+printf("\n Enter the number of terms in 1st polynomial");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+printf("\n Enter the coefficient of the 1st polynomial=");
+scanf("%d",&p1[i].coeff);
+printf("\n Enter the exponent of the 1st polynomial : ");
+
+scanf("%d", &p1[i].expo);
+}
+for(i=0; i<n; i++)
+{
+printf("%dx^%d", p1[i].coeff, p1[i].expo);
+if(i<n-1)
+printf("+");
+}
+
+printf("\n Enter the number of terms in 2nd polynomial");
+scanf("%d",&m);
+for(i=0;i<m;i++)
+{
+printf("\n Enter the coefficient of the 2nd polynomial=");
+scanf("%d",&p2[i].coeff);
+printf("\n Enter the exponent of the 2nd polynomial : ");
+
+scanf("%d", &p2[i].expo);
+}
+for(i=0; i<m; i++)
+{
+printf("%dx^%d", p2[i].coeff, p2[i].expo);
+if(i<m-1)
+printf("+");
+}
+i=0;j=0;k=0;
+while(i<n || i<m)
+{
+if(p1[i].expo == p2[j].expo)
+{
+p3[k].coeff = p1[i].coeff + p2[j].coeff;
+p3[k].expo = p1[i].expo;
+i++;
+j++;
+k++;
+}
+
+else if(p1[i].expo > p2[j].expo)
+
+{
+p3[k] = p1[i];
+i++;
+k++;
+}
+else
+{
+p3[k] = p2[j];
+j++;
+k++;
+}
+}
+printf("\n Resultant polynomial p3 : ");
+
+for(i=0; i<k; i++)
+{
+printf("%d", p3[i].coeff);
+if(p3[i].expo != 0)
+printf("x^%d", p3[i].expo);
+if(i<k-1)
+printf(" + ");
+}
+printf("\n");
+
+}
