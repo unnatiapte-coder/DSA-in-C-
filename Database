@@ -1,0 +1,189 @@
+#include<stdio.h>
+#include<string.h>
+struct student{
+char name[20];
+int rollnumber,de,dsa,ss,total;
+float avg;
+}stu[5];
+void display(int); // function declaration
+int n;
+int main()
+{
+int ch, flag=0,i,a,ch2,n1;
+char key[20];
+printf("\n enter number of students:");
+scanf("%d",&n);
+for(i=0;i<n;i++){
+printf("\nstudent %d:\n",i+1);
+printf("\n enter name:");
+
+scanf("%s",stu[i].name);
+printf("\n enter roll no.:");
+scanf("%d",&stu[i].rollnumber);
+printf("\n marks in de :");
+scanf("%d",&stu[i].de);
+printf("\n marks in dsa :");
+scanf("%d",&stu[i].dsa);
+printf("\n marks in ss :");
+scanf("%d",&stu[i].ss);
+stu[i].total=stu[i].de+stu[i].dsa+stu[i].ss;
+stu[i].avg=(float)stu[i].total/3;
+printf("Total marks of student %d =%d\n",i+1,stu[i].total);
+printf("average marks of student %d =%.2f\n",i,stu[i].avg);
+}
+printf("\n Database of students\n ");
+display(n); // function call
+do{
+printf("\n Menu :\n 1.Search by name\n 2.Modify\n 3.Append\n 4.Sort\n");
+printf("\n Enter your choice\n");
+scanf("%d",&ch);
+switch(ch){
+case 1://search by name
+printf("\n enter name to be searched:");
+scanf("%s",key);
+for(i=0;i<n;i++){
+a=strcmp(key,stu[i].name);
+if (a==0){
+flag=1;
+break;
+}
+}
+if (flag==1){
+printf("\n Roll number\t Name\t\t DE \t DSA \t SS \t Total\t Average");
+printf("\n %d\t\t %s\t\t %d\t %d\t %d\t %d\t %.2f",
+stu[i].rollnumber,stu[i].name,stu[i].de,stu[i].dsa,stu[i].ss,stu[i].total,stu[i].avg);
+}
+
+else {
+printf("name not found\n");
+}
+break;
+case 2://modify
+do{
+int key1,key3;
+printf("\n What do u want to modify:\n 1.Roll number \n 2.Name 3. marks in ss ");
+printf("\n enter your choice:");
+scanf("%d",&ch2);
+switch(ch2){
+case 1:
+printf("\n enter roll number to modify:");
+scanf("%d",&key1);
+for(i=0;i<n;i++){
+if (key1==stu[i].rollnumber){
+flag=1;
+break;
+}
+}
+if (flag==1){
+printf("\n enter new roll number:");
+scanf("%d",&stu[i].rollnumber);
+printf("\n Roll number\t Name\t\t DE \t DSA \t SS \t Total\t Average");
+printf("\n %d\t\t %s\t\t %d\t %d\t %d\t %d\t
+%.2f",stu[i].rollnumber,stu[i].name,stu[i].de,stu[i].dsa,stu[i].ss,stu[i].total,stu[i].avg);
+}
+else {
+printf("roll number not found\n");
+}
+break;
+case 2:
+printf("enter name to modify ");
+scanf("%s",key);
+for(i=0;i<n;i++){
+a=strcmp(key,stu[i].name);
+
+if (a==0){
+flag=1;
+break;
+}
+}
+if (flag==1){
+printf("\n enter new name:");
+scanf("%s",&stu[i].name);
+printf("\n Roll number\t Name\t\t DE \t DSA \t SS \t Total\t Average");
+printf("\n %d\t\t %s\t\t %d\t %d\t %d\t %d\t %.2f",
+stu[i].rollnumber,stu[i].name,stu[i].de,stu[i].dsa,stu[i].ss,stu[i].total,stu[i].avg);
+}
+else {
+printf("name not found\n");
+}
+break;
+case 3:
+printf("enter roll number whose ss marks are to be modified ");
+scanf("%d",&key1);
+for(i=0;i<n;i++){
+if (key1==stu[i].rollnumber){
+flag=1;
+break;
+}
+}
+if (flag==1){
+printf("\n enter new ss marks :");
+scanf("%d",&stu[i].ss);
+printf("\n Roll number\t Name\t\t DE \t DSA \t SS \t Total\t Average");
+printf("\n %d\t\t %s\t\t %d\t %d\t %d\t %d\t %.2f",
+stu[i].rollnumber,stu[i].name,stu[i].de,stu[i].dsa,stu[i].ss,stu[i].total,stu[i].avg);
+}
+else {
+printf("name not found\n");
+}
+break;
+}
+
+}while(ch2<3);
+break;
+case 3://append
+printf("\nDATA TO APPEND :\n");
+printf("\n enter number of students to add :");
+scanf("%d",&n1);
+for(i=n;i<n+n1;i++){
+printf("\nstudent %d:\n",i+1);
+printf("\n enter name:");
+scanf("%s",stu[i].name);
+printf("\n enter roll no.:");
+scanf("%d",&stu[i].rollnumber);
+printf("\n marks in de :");
+scanf("%d",&stu[i].de);
+printf("\n marks in dsa :");
+scanf("%d",&stu[i].dsa);
+printf("\n marks in ss :");
+scanf("%d",&stu[i].ss);
+stu[i].total=stu[i].de+stu[i].dsa+stu[i].ss;
+stu[i].avg=(float)stu[i].total/3;
+printf("Total marks of student %d =%d\n",i+1,stu[i].total);
+printf("average marks of student %d =%.2f\n",i,stu[i].avg);
+}
+printf("\n Database of students\n ");
+n+=n1;
+display(n);
+break;
+case 4://sort
+{
+struct student temp;
+
+for(int i=0;i<n-1;i++){
+for(int j=i+1;j<n;j++){
+if(stu[i].rollnumber > stu[j].rollnumber){
+temp = stu[i];
+stu[i] = stu[j];
+stu[j] = temp;
+
+}
+}
+}
+printf("\n Database after sorting by Roll Number (Ascending):\n");
+display(n);
+}
+break;
+}
+}while(ch<5);
+return 0;
+
+}
+void display(int n) { //function defination
+int i;
+printf("\n Roll number\t Name\t\t DE \t DSA \t SS \t Total\t Average");
+for(int i=0;i<n;i++){
+printf("\n %d\t\t %s\t\t %d\t %d\t %d\t %d\t %.2f",
+stu[i].rollnumber,stu[i].name,stu[i].de,stu[i].dsa,stu[i].ss,stu[i].total,stu[i].avg);
+}
+}
