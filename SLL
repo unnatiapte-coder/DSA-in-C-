@@ -1,0 +1,210 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+int number;
+struct node *next;
+}*head,*curr,*p,*q,*r;
+void display(struct node *);
+void disp_rev(struct node *);
+void insert(struct node *);
+void delete(struct node *);
+void reverse(struct node *);
+int cho, ch1, d, d1, d2, ch2, key, pos, flag=0;
+int main()
+{
+head=NULL;
+char x;
+curr = (struct node*)malloc(sizeof(struct node));
+printf("\n Enter data = ");
+scanf("%d", &curr->number);
+if(head==NULL)
+head=curr;
+do
+{
+printf("\n Do you want to create a new node ? ");
+scanf(" %c", &x);
+if(x == 'y' || x == 'Y')
+{
+
+p = (struct node*)malloc(sizeof(struct node));
+printf("\n Enter data = ");
+scanf("%d", &p->number);
+curr->next = p;
+curr = curr->next;
+}
+}while(x == 'y' || x == 'Y');
+curr->next = NULL;
+printf("\n Display the LinkedList \n");
+display(head);
+do
+{
+printf("\n Menu \n 1. Insert \n 2. Delete \n 3. Search \n 4. Display in
+reverse order \n 5. Reverse the Singly LinkedList \n");
+printf("\n Enter your choice : ");
+scanf("%d", &cho);
+switch(cho)
+{
+case 1: //INSERT
+printf("\n 1. Insert \n");
+do
+{
+printf("\n Where do you want to insert a node ?");
+printf("\n 1. At the beginning \n 2. At the end \n 3. In the middle \n");
+printf("Enter your choice :");
+scanf("%d", &ch1);
+switch(ch1)
+{
+case 1: //Insert at the beginning
+printf("\n 1.Insert at the beginning");
+p=(struct node *)malloc(sizeof(struct node));
+printf("\n Enter the data or number : ");
+scanf("%d", &p->number);
+p->next=head;
+head=p;
+printf("\n LinkedList after inserting a node at the beginning \n");
+display(head);
+break;
+case 2: //Insert at the end
+printf("\n 2.Insert at the end ");
+p=(struct node *)malloc(sizeof(struct node));
+printf("\n Enter the data or number : ");
+scanf("%d", &p->number);
+p->next=NULL;
+curr=head;
+while(curr->next != NULL)
+
+{
+curr = curr->next;
+}
+curr->next = p;
+printf("\n LinkedList after inserting a node at the end \n");
+display(head);
+break;
+case 3: //Insert in the middle
+printf("\n 3.Insert in the middle \n");
+printf("\n 1.By using data ");
+p=(struct node *)malloc(sizeof(struct node));
+printf("\n Enter the data or number : ");
+scanf("%d", &p->number);
+printf("\n Enter the data after which the new node is to be inserted :");
+scanf("%d", &d);
+curr = head;
+while(curr->number != d)
+{
+curr = curr->next;
+}
+p->next = curr->next;
+curr->next = p;
+printf("\n LinkedList after inserting a node in the middle using data
+\n");
+display(head);
+break;
+}
+break;
+}while(ch1<4);
+break;
+case 2: //DELETE
+printf("\n 2. Delete \n");
+do
+{
+printf("\n From where do you want to delete a node ?");
+printf("\n 1. From the beginning \n 2. From the end \n 3. From the middle
+\n");
+printf("Enter your choice :");
+scanf("%d", &ch2);
+switch(ch2)
+{
+case 1: //Delete from the beginning
+printf("\n Delete from the beginning\n");
+curr = head;
+head = head->next;
+
+free(curr);
+break;
+case 2: //Delte from the end
+printf("\n Delete from the end\n");
+curr = head;
+while(curr->next->next != NULL)
+{
+curr=curr->next;
+}
+p = curr->next;
+curr->next = NULL;
+free(p);
+break;
+case 3: //Delete from the middle
+printf("\n Delete from the middle\n");
+printf("\n Enter data to be deleted= ");
+scanf("%d",&d2);
+curr = head;
+while(curr->next->number != d2)
+{
+curr=curr->next;
+}
+p = curr->next;
+curr->next = p->next;
+free(p);
+break;
+}
+printf("\n LinkedList after deleting a node \n");
+display(head);
+}while(ch2<4);
+break;
+case 3: //SEARCH
+printf("\n 3. Search \n");
+printf("\n enter key to be searched=");
+scanf("%d",&key);
+curr=head;
+while(curr!=NULL)
+{
+if(curr->number==key)
+{
+flag=1;
+break;
+}
+else{
+
+curr=curr->next;
+pos++;
+}
+}
+if(flag==1)
+{
+printf("\n Position of %d is %d \n",key,pos);
+}
+else
+printf("Not found");
+break;
+case 4: //REVERSE ORDER
+printf("\n 4. Display in reverse order \n");
+disp_rev(head);
+break;
+case 5: //REVERSE SINGLY LINKED LIST
+printf("\n 5. Reverse the Singly LinkedList \n");
+break;
+}
+}while(cho<6);
+return 0;
+}
+
+void display(struct node *curr)
+{
+if(curr == NULL)
+printf("\n SLL is empty.");
+else
+{
+while( curr != NULL)
+{
+printf("%d\t", curr->number);
+curr = curr->next;
+}
+}
+}
+void disp_rev(struct node *curr)
+{
+if ( curr != NULL )
+{ disp_rev(curr->next);
+printf("%d\t", curr->number);
+}
+}
